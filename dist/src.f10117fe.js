@@ -1922,7 +1922,6 @@ var User =
 function () {
   function User(data) {
     this.data = data;
-    this.events = {};
     this.id = this.get("id");
   }
 
@@ -1932,24 +1931,6 @@ function () {
 
   User.prototype.set = function (update) {
     Object.assign(this.data, update);
-  };
-
-  User.prototype.on = function (eventName, callback) {
-    var handlers = this.events[eventName] || [];
-    handlers.push(callback);
-    this.events[eventName] = handlers;
-  };
-
-  User.prototype.trigger = function (eventName) {
-    var handlers = this.events[eventName];
-
-    if (!handlers || handlers.length === 0) {
-      return;
-    }
-
-    handlers.forEach(function (callback) {
-      callback();
-    });
   };
 
   User.prototype.fetch = function () {
@@ -1982,9 +1963,6 @@ Object.defineProperty(exports, "__esModule", {
 var User_1 = require("./models/User");
 
 var user = new User_1.User({
-  id: 1
-});
-user.set({
   name: "Tosin Moronfolu",
   age: 23
 });
