@@ -10,6 +10,7 @@ type Callback = () => void;
 
 export class User {
   events: { [key: string]: Callback[] } = {};
+  id = this.get("id");
 
   constructor(private data: UserProps) {}
 
@@ -40,9 +41,17 @@ export class User {
 
   fetch(): void {
     axios
-      .get(`http://localhost:3000/${this.get("id")}`)
+      .get(`http://localhost:3000/${this.id}`)
       .then((response: AxiosResponse): void => {
         this.set(response.data);
       });
+  }
+
+  save(): void {
+    if (this.id) {
+      axios.put(`http://localhost:3000/users/${this.id}`, this.data);
+    } else {
+      axios.post("http://localhost:3000/users", this.data);
+    }
   }
 }
