@@ -2056,6 +2056,12 @@ function () {
     enumerable: false,
     configurable: true
   });
+
+  User.prototype.set = function (update) {
+    this.attributes.set(update);
+    this.events.trigger("change");
+  };
+
   return User;
 }();
 
@@ -2072,6 +2078,12 @@ var User_1 = require("./models/User");
 var user = new User_1.User({
   name: "Tosin Moronfolu",
   age: 23
+});
+user.on("change", function () {
+  console.log("a change event happened");
+});
+user.set({
+  name: "Tosin Moronfolu David"
 });
 },{"./models/User":"src/models/User.ts"}],"../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
