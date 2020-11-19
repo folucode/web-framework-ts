@@ -2156,7 +2156,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var User_1 = require("./models/User");
 
-var user = new User_1.User({
+var user = User_1.User.buildUser({
   id: 1,
   name: "Tosin Moronfolu",
   age: 23

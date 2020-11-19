@@ -1,6 +1,6 @@
 import { User } from "./models/User";
 
-const user = new User({ id: 1, name: "Tosin Moronfolu", age: 23 });
+const user = User.buildUser({ id: 1, name: "Tosin Moronfolu", age: 23 });
 
 user.on("save", () => {
   console.log(user);
