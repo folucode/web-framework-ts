@@ -2214,18 +2214,30 @@ var UserForm =
 /** @class */
 function () {
   function UserForm(parent, model) {
+    var _this = this;
+
     this.parent = parent;
     this.model = model;
+
+    this.setAgeClick = function () {
+      _this.model.setRandomAge();
+    };
+
+    this.bindModel();
   }
 
   UserForm.prototype.eventsMap = function () {
     return {
-      "click:.click": this.onButtonClick
+      "click:.click": this.setAgeClick
     };
   };
 
-  UserForm.prototype.onButtonClick = function () {
-    console.log("Hi there");
+  UserForm.prototype.bindModel = function () {
+    var _this = this;
+
+    this.model.on("change", function () {
+      _this.render();
+    });
   };
 
   UserForm.prototype.bindEvents = function (fragment) {
@@ -2251,6 +2263,7 @@ function () {
   };
 
   UserForm.prototype.render = function () {
+    this.parent.innerHTML = "";
     var templateElement = document.createElement("template");
     templateElement.innerHTML = this.template();
     this.bindEvents(templateElement.content);

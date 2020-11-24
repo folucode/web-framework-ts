@@ -1,17 +1,25 @@
 import { User } from "./User";
 
 export class UserForm {
-  constructor(public parent: Element, public model: User) {}
+  constructor(public parent: Element, public model: User) {
+    this.bindModel();
+  }
 
   eventsMap(): { [key: string]: () => void } {
     return {
-      "click:.click": this.onButtonClick,
+      "click:.click": this.setAgeClick,
     };
   }
 
-  onButtonClick(): void {
-    console.log("Hi there");
+  bindModel(): void {
+    this.model.on("change", () => {
+      this.render();
+    });
   }
+
+  setAgeClick = (): void => {
+    this.model.setRandomAge();
+  };
 
   bindEvents(fragment: DocumentFragment): void {
     const eventsMap = this.eventsMap();
@@ -38,6 +46,8 @@ export class UserForm {
   }
 
   public render(): void {
+    this.parent.innerHTML = "";
+
     const templateElement = document.createElement("template");
     templateElement.innerHTML = this.template();
 
