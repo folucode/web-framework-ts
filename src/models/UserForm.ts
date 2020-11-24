@@ -7,7 +7,8 @@ export class UserForm {
 
   eventsMap(): { [key: string]: () => void } {
     return {
-      "click:.click": this.setAgeClick,
+      "click:.get-age": this.onSetAgeClick,
+      "click:.set-name": this.onSetNameClick,
     };
   }
 
@@ -17,8 +18,14 @@ export class UserForm {
     });
   }
 
-  setAgeClick = (): void => {
+  onSetAgeClick = (): void => {
     this.model.setRandomAge();
+  };
+
+  onSetNameClick = (): void => {
+    const input = this.parent.querySelector("input");
+    const name = input.value;
+    this.model.set({ name });
   };
 
   bindEvents(fragment: DocumentFragment): void {
@@ -38,9 +45,10 @@ export class UserForm {
         <h1>Form</h1>
         <div>User Name: ${this.model.get("name")}</div>
         <div>User Age: ${this.model.get("age")}</div>
-        <input />
+        <input type="text" value=${this.model.get("name")} />
         <button>Click</button>
-        <button class="click">set random age</button>
+        <button class="set-name">set name</button>
+        <button class="set-age">set random age</button>
         </div>
         `;
   }
