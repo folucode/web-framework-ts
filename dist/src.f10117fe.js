@@ -2301,6 +2301,10 @@ function (_super) {
   function UserForm() {
     var _this = _super !== null && _super.apply(this, arguments) || this;
 
+    _this.onSaveClick = function () {
+      _this.model.save();
+    };
+
     _this.onSetAgeClick = function () {
       _this.model.setRandomAge();
     };
@@ -2322,13 +2326,14 @@ function (_super) {
 
   UserForm.prototype.eventsMap = function () {
     return {
-      "click:.get-age": this.onSetAgeClick,
-      "click:.set-name": this.onSetNameClick
+      "click:.set-age": this.onSetAgeClick,
+      "click:.set-name": this.onSetNameClick,
+      "click:.save-user": this.onSaveClick
     };
   };
 
   UserForm.prototype.template = function () {
-    return "<div>\n        <h1>Form</h1>\n        <div>User Name: " + this.model.get("name") + "</div>\n        <div>User Age: " + this.model.get("age") + "</div>\n        <input type=\"text\" value=" + this.model.get("name") + " />\n        <button>Click</button>\n        <button class=\"set-name\">set name</button>\n        <button class=\"set-age\">set random age</button>\n        </div>\n        ";
+    return "<div>\n        <h1>Form</h1>\n        <div>User Name: " + this.model.get("name") + "</div>\n        <div>User Age: " + this.model.get("age") + "</div>\n        <input type=\"text\" value=" + this.model.get("name") + " />\n        <button class=\"save-user\">save user</button>\n        <button class=\"set-name\">set name</button>\n        <button class=\"set-age\">set random age</button>\n        </div>\n        ";
   };
 
   return UserForm;
