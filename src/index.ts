@@ -1,5 +1,5 @@
 import { User } from "./models/User";
-import { UserForm } from "./models/UserForm";
+import { UserForm } from "./views/UserForm";
 
 const user = User.buildUser({ name: "Tosin", age: 23 });
 

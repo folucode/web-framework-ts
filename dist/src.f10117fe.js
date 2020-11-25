@@ -2202,50 +2202,24 @@ function (_super) {
 }(Model_1.Model);
 
 exports.User = User;
-},{"./Model":"src/models/Model.ts","./Attributes":"src/models/Attributes.ts","./ApiSync":"src/models/ApiSync.ts","./Eventing":"src/models/Eventing.ts","./Collection":"src/models/Collection.ts"}],"src/models/UserForm.ts":[function(require,module,exports) {
+},{"./Model":"src/models/Model.ts","./Attributes":"src/models/Attributes.ts","./ApiSync":"src/models/ApiSync.ts","./Eventing":"src/models/Eventing.ts","./Collection":"src/models/Collection.ts"}],"src/views/View.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.UserForm = void 0;
+exports.View = void 0;
 
-var UserForm =
+var View =
 /** @class */
 function () {
-  function UserForm(parent, model) {
-    var _this = this;
-
+  function View(parent, model) {
     this.parent = parent;
     this.model = model;
-
-    this.onSetAgeClick = function () {
-      _this.model.setRandomAge();
-    };
-
-    this.onSetNameClick = function () {
-      var input = _this.parent.querySelector("input");
-
-      if (input) {
-        var name = input.value;
-
-        _this.model.set({
-          name: name
-        });
-      }
-    };
-
     this.bindModel();
   }
 
-  UserForm.prototype.eventsMap = function () {
-    return {
-      "click:.get-age": this.onSetAgeClick,
-      "click:.set-name": this.onSetNameClick
-    };
-  };
-
-  UserForm.prototype.bindModel = function () {
+  View.prototype.bindModel = function () {
     var _this = this;
 
     this.model.on("change", function () {
@@ -2253,7 +2227,15 @@ function () {
     });
   };
 
-  UserForm.prototype.bindEvents = function (fragment) {
+  View.prototype.render = function () {
+    this.parent.innerHTML = "";
+    var templateElement = document.createElement("template");
+    templateElement.innerHTML = this.template();
+    this.bindEvents(templateElement.content);
+    this.parent.append(templateElement.content);
+  };
+
+  View.prototype.bindEvents = function (fragment) {
     var eventsMap = this.eventsMap();
 
     var _loop_1 = function _loop_1(eventkey) {
@@ -2271,23 +2253,89 @@ function () {
     }
   };
 
+  return View;
+}();
+
+exports.View = View;
+},{}],"src/views/UserForm.ts":[function(require,module,exports) {
+"use strict";
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UserForm = void 0;
+
+var View_1 = require("./View");
+
+var UserForm =
+/** @class */
+function (_super) {
+  __extends(UserForm, _super);
+
+  function UserForm() {
+    var _this = _super !== null && _super.apply(this, arguments) || this;
+
+    _this.onSetAgeClick = function () {
+      _this.model.setRandomAge();
+    };
+
+    _this.onSetNameClick = function () {
+      var input = _this.parent.querySelector("input");
+
+      if (input) {
+        var name = input.value;
+
+        _this.model.set({
+          name: name
+        });
+      }
+    };
+
+    return _this;
+  }
+
+  UserForm.prototype.eventsMap = function () {
+    return {
+      "click:.get-age": this.onSetAgeClick,
+      "click:.set-name": this.onSetNameClick
+    };
+  };
+
   UserForm.prototype.template = function () {
     return "<div>\n        <h1>Form</h1>\n        <div>User Name: " + this.model.get("name") + "</div>\n        <div>User Age: " + this.model.get("age") + "</div>\n        <input type=\"text\" value=" + this.model.get("name") + " />\n        <button>Click</button>\n        <button class=\"set-name\">set name</button>\n        <button class=\"set-age\">set random age</button>\n        </div>\n        ";
   };
 
-  UserForm.prototype.render = function () {
-    this.parent.innerHTML = "";
-    var templateElement = document.createElement("template");
-    templateElement.innerHTML = this.template();
-    this.bindEvents(templateElement.content);
-    this.parent.append(templateElement.content);
-  };
-
   return UserForm;
-}();
+}(View_1.View);
 
 exports.UserForm = UserForm;
-},{}],"src/index.ts":[function(require,module,exports) {
+},{"./View":"src/views/View.ts"}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2296,7 +2344,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var User_1 = require("./models/User");
 
-var UserForm_1 = require("./models/UserForm");
+var UserForm_1 = require("./views/UserForm");
 
 var user = User_1.User.buildUser({
   name: "Tosin",
@@ -2310,7 +2358,7 @@ if (root) {
 } else {
   throw new Error("Root Element not found");
 }
-},{"./models/User":"src/models/User.ts","./models/UserForm":"src/models/UserForm.ts"}],"../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./models/User":"src/models/User.ts","./views/UserForm":"src/views/UserForm.ts"}],"../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
