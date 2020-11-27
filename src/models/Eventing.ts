@@ -1,7 +1,8 @@
 type Callback = () => void;
-
 export class Eventing {
-  events: { [key: string]: Callback[] } = {};
+  events: {
+    [key: string]: Callback[];
+  } = {};
 
   on = (eventName: string, callback: Callback): void => {
     const handlers = this.events[eventName] || [];
@@ -15,7 +16,7 @@ export class Eventing {
       return;
     }
 
-    handlers.forEach((callback) => {
+    handlers.forEach(callback => {
       callback();
     });
   };
